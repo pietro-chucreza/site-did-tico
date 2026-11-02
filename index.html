@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>testes simples</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #243b3a;
+            background:
+                linear-gradient(rgba(18, 43, 42, 0.68), rgba(18, 43, 42, 0.76)),
+                url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=2000&q=85")
+                center / cover fixed;
+        }
+
+        header {
+            padding: 56px 24px 48px;
+            color: #fffaf0;
+            text-align: center;
+            background-color: rgba(25, 63, 61, 0.78);
+            border-bottom: 3px solid #d6a66a;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            line-height: 1.2;
+            cursor: pointer;
+        }
+
+        header h1:focus-visible {
+            outline: 3px solid #d6a66a;
+            outline-offset: 6px;
+        }
+
+        .easter-egg {
+            display: none;
+            width: fit-content;
+            margin: 18px auto 0;
+            padding: 10px 18px;
+            color: #245653;
+            background: #fffaf0;
+            border-radius: 999px;
+            font-weight: bold;
+        }
+
+        .easter-egg.visible {
+            display: block;
+        }
+
+        header p {
+            margin: 12px 0 0;
+        }
+
+        main {
+            width: min(900px, calc(100% - 32px));
+            margin: 32px auto;
+            flex: 1;
+        }
+
+        section {
+            margin-bottom: 20px;
+            padding: 24px 28px;
+            background: rgba(255, 250, 240, 0.96);
+            border: 1px solid rgba(214, 166, 106, 0.45);
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(10, 30, 29, 0.18);
+        }
+
+        section h2 {
+            margin-top: 0;
+            color: #245653;
+        }
+
+        .resources {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 14px;
+        }
+
+        .resource-card {
+            display: block;
+            padding: 18px;
+            color: #243b3a;
+            background: #fff;
+            border: 1px solid #d5e1de;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 160ms ease, box-shadow 160ms ease;
+        }
+
+        .resource-card:hover {
+            color: #245653;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(10, 30, 29, 0.12);
+        }
+
+        .resource-card strong,
+        .resource-card span {
+            display: block;
+        }
+
+        .resource-card span {
+            margin-top: 4px;
+            color: #52615f;
+            font-size: 0.9rem;
+        }
+
+        .resource-card:focus-visible,
+        .search:focus-visible {
+            outline: 3px solid #d6a66a;
+            outline-offset: 3px;
+        }
+
+        .search {
+            width: 100%;
+            margin: 4px 0 16px;
+            padding: 12px 14px;
+            border: 1px solid #b8c9c4;
+            border-radius: 6px;
+            font: inherit;
+        }
+
+        .search-status {
+            margin: 12px 0 0;
+        }
+
+        footer {
+            padding: 14px 20px;
+            color: #fffaf0;
+            text-align: center;
+            background-color: rgba(25, 63, 61, 0.92);
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        .theme-toggle {
+            margin-top: 20px;
+            padding: 10px 16px;
+            color: #245653;
+            background: #fffaf0;
+            border: 0;
+            border-radius: 6px;
+            font: inherit;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .theme-toggle:focus-visible {
+            outline: 3px solid #d6a66a;
+            outline-offset: 3px;
+        }
+
+        body.dark-theme {
+            color: #edf1ed;
+            background: #172321;
+        }
+
+        body.dark-theme header {
+            background-color: #193f3d;
+        }
+
+        body.dark-theme section,
+        body.dark-theme footer {
+            color: #edf1ed;
+            background: #243330;
+            border-color: #45615b;
+        }
+
+        body.dark-theme section h2 {
+            color: #b5d7ce;
+        }
+
+        body.dark-theme .resource-card {
+            color: #edf1ed;
+            background: #30433f;
+            border-color: #45615b;
+        }
+
+        body.dark-theme .resource-card span {
+            color: #c4d1cb;
+        }
+
+        body.dark-theme .search {
+            color: #edf1ed;
+            background: #30433f;
+            border-color: #60766e;
+        }
+
+        body.dark-theme .search::placeholder {
+            color: #c4d1cb;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 40px 20px 34px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            body {
+                background-attachment: scroll;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 id="site-title" tabindex="0" role="button" aria-label="Título do site. Ative cinco vezes para uma surpresa.">Site para repositório do GitHub</h1>
+        <p>Exemplos simples de desenvolvimento web.</p>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">Ativar tema escuro</button>
+        <p class="easter-egg" id="easter-egg" role="status" aria-live="polite">neguinho goiabinha 🍬</p>
+    </header>
+    <main>
+        <section>
+            <h2>Explore os exemplos</h2>
+            <label for="search">Buscar por tecnologia</label>
+            <input class="search" id="search" type="search" placeholder="Ex.: CSS" autocomplete="off">
+            <div class="resources" id="resources">
+                <a class="resource-card" href="exemplo1.html" data-search="html estrutura página">
+                    <strong>HTML</strong>
+                    <span>Estrutura de uma página</span>
+                </a>
+                <a class="resource-card" href="exemplo2.html" data-search="css estilos cores">
+                    <strong>CSS</strong>
+                    <span>Estilos e responsividade</span>
+                </a>
+                <a class="resource-card" href="exemplo3.html" data-search="javascript interação código">
+                    <strong>JavaScript</strong>
+                    <span>Interações no navegador</span>
+                </a>
+            </div>
+            <p class="search-status" id="search-status" aria-live="polite"></p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Testes Simples. Todos os direitos reservados.</p>
+    </footer>
+    <script>
+        const botaoTema = document.getElementById("theme-toggle");
+        const temaSalvo = localStorage.getItem("tema");
+
+        function atualizarBotaoTema() {
+            const temaEscuroAtivo = document.body.classList.contains("dark-theme");
+            botaoTema.textContent = temaEscuroAtivo
+                ? "Ativar tema claro"
+                : "Ativar tema escuro";
+            botaoTema.setAttribute("aria-pressed", temaEscuroAtivo);
+        }
+
+        if (temaSalvo === "escuro") {
+            document.body.classList.add("dark-theme");
+        }
+        atualizarBotaoTema();
+
+        botaoTema.addEventListener("click", function () {
+            const temaEscuroAtivo = document.body.classList.toggle("dark-theme");
+            localStorage.setItem("tema", temaEscuroAtivo ? "escuro" : "claro");
+            atualizarBotaoTema();
+        });
+
+        const busca = document.getElementById("search");
+        const cartoes = document.querySelectorAll(".resource-card");
+        const statusBusca = document.getElementById("search-status");
+
+        busca.addEventListener("input", function () {
+            const termo = busca.value.trim().toLowerCase();
+            let resultados = 0;
+
+            cartoes.forEach(function (cartao) {
+                const corresponde = cartao.dataset.search.includes(termo);
+                cartao.hidden = !corresponde;
+                if (corresponde) {
+                    resultados += 1;
+                }
+            });
+
+            statusBusca.textContent = resultados === 0
+                ? "Nenhum exemplo encontrado."
+                : `${resultados} exemplo(s) encontrado(s).`;
+        });
+
+        const titulo = document.getElementById("site-title");
+        const surpresa = document.getElementById("easter-egg");
+        let ativacoes = 0;
+        let temporizadorSurpresa;
+
+        function ativarSurpresa() {
+            ativacoes += 1;
+            clearTimeout(temporizadorSurpresa);
+            temporizadorSurpresa = setTimeout(function () {
+                ativacoes = 0;
+            }, 1200);
+
+            if (ativacoes === 5) {
+                surpresa.classList.add("visible");
+                ativacoes = 0;
+            }
+        }
+
+        titulo.addEventListener("click", ativarSurpresa);
+        titulo.addEventListener("keydown", function (evento) {
+            if (evento.key === "Enter" || evento.key === " ") {
+                evento.preventDefault();
+                ativarSurpresa();
+            }
+        });
+    </script>
+</body>
+</html>

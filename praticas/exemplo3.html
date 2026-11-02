@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo de JavaScript</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 32px 16px;
+            color: #263238;
+            background: #edf3f2;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        main {
+            width: min(760px, 100%);
+            margin: 0 auto;
+        }
+
+        header,
+        section,
+        footer {
+            margin-bottom: 20px;
+            padding: 24px;
+            background: #fff;
+            border: 1px solid #d5e1de;
+            border-radius: 10px;
+        }
+
+        header {
+            color: #fff;
+            background: #245653;
+        }
+
+        h1,
+        h2 {
+            margin-top: 0;
+        }
+
+        .demo {
+            padding: 20px;
+            text-align: center;
+            background: #f5f0e6;
+            border-left: 5px solid #c58b4b;
+            border-radius: 6px;
+        }
+
+        #contador {
+            display: block;
+            margin: 8px 0;
+            color: #245653;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        button {
+            margin: 6px;
+            padding: 10px 16px;
+            color: #fff;
+            background: #245653;
+            border: 0;
+            border-radius: 6px;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #193f3d;
+        }
+
+        button:focus-visible {
+            outline: 3px solid #c58b4b;
+            outline-offset: 3px;
+        }
+
+        pre {
+            overflow-x: auto;
+            margin: 12px 0 0;
+            padding: 18px;
+            color: #f3f5f7;
+            background: #263238;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        code {
+            font-family: Consolas, "Courier New", monospace;
+        }
+
+        footer {
+            margin-bottom: 0;
+            color: #52615f;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        .theme-toggle {
+            margin: 6px;
+            padding: 10px 16px;
+            color: #245653;
+            background: #fffaf0;
+            border: 0;
+            border-radius: 6px;
+            font: inherit;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        body.dark-theme {
+            color: #edf1ed;
+            background: #172321;
+        }
+
+        body.dark-theme header {
+            background: #193f3d;
+        }
+
+        body.dark-theme section,
+        body.dark-theme footer {
+            color: #edf1ed;
+            background: #243330;
+            border-color: #45615b;
+        }
+
+        body.dark-theme h2,
+        body.dark-theme #contador {
+            color: #b5d7ce;
+        }
+
+        body.dark-theme .demo {
+            color: #edf1ed;
+            background: #30433f;
+        }
+
+        @media (max-width: 520px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            header,
+            section,
+            footer {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Aprendendo JavaScript</h1>
+            <p>JavaScript dá comportamento às páginas. Clique nos botões abaixo e veja o código funcionando.</p>
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">Ativar tema escuro</button>
+        </header>
+
+        <section>
+            <h2>O resultado: um contador</h2>
+            <p>Clique em “Aumentar” para atualizar o número. “Zerar” volta ao início.</p>
+            <div class="demo">
+                <span id="contador" aria-live="polite">0</span>
+                <p id="mensagem">Você ainda não clicou no botão.</p>
+                <button id="aumentar" type="button">Aumentar</button>
+                <button id="zerar" type="button">Zerar</button>
+            </div>
+        </section>
+
+        <section>
+            <h2>1. O que é JavaScript?</h2>
+            <p>HTML descreve o conteúdo, CSS cuida da aparência e JavaScript permite responder a ações. Por exemplo, ao clicar em um botão, um script pode atualizar um número sem recarregar a página.</p>
+        </section>
+
+        <section>
+            <h2>2. Variáveis: guardar informações</h2>
+            <pre><code>let cliques = 0;
+const limite = 10;</code></pre>
+            <ul>
+                <li><code>let</code> cria uma variável que pode receber outro valor. O contador usa <code>let</code> porque seu valor muda.</li>
+                <li><code>const</code> cria uma referência que não será reatribuída. Use quando não precisa trocar o valor.</li>
+                <li><code>cliques</code> e <code>limite</code> são nomes escolhidos por quem escreve o código.</li>
+                <li>O número <code>0</code> é um dado numérico; textos ficam entre aspas, como <code>"Olá!"</code>.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>3. Funções: organizar ações</h2>
+            <p>Uma função reúne instruções com um nome. Ela só executa quando é chamada:</p>
+            <pre><code>function aumentarContador() {
+    cliques = cliques + 1;
+    atualizarPagina();
+}</code></pre>
+            <p>A expressão <code>cliques = cliques + 1</code> soma um ao valor atual e guarda o resultado de volta na variável.</p>
+        </section>
+
+        <section>
+            <h2>4. Encontrar e atualizar elementos</h2>
+            <pre><code>const numero = document.getElementById("contador");
+numero.textContent = cliques;</code></pre>
+            <ul>
+                <li><code>document</code> representa a página que o navegador carregou.</li>
+                <li><code>getElementById("contador")</code> encontra o elemento que tem <code>id="contador"</code> no HTML.</li>
+                <li><code>textContent</code> lê ou muda o texto que aparece dentro do elemento.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>5. Eventos: responder a cliques</h2>
+            <pre><code>botao.addEventListener("click", aumentarContador);</code></pre>
+            <p><code>addEventListener</code> escuta um evento. Neste caso, quando acontece um <code>"click"</code>, o navegador chama a função <code>aumentarContador</code>. Não usamos parênteses depois do nome da função porque queremos que ela rode quando houver o clique, não imediatamente.</p>
+        </section>
+
+        <section>
+            <h2>O código JavaScript completo do exemplo</h2>
+            <p>Este trecho conecta os botões ao contador e atualiza o número e a mensagem:</p>
+            <pre><code>let cliques = 0;
+
+const numero = document.getElementById("contador");
+const mensagem = document.getElementById("mensagem");
+const botaoAumentar = document.getElementById("aumentar");
+const botaoZerar = document.getElementById("zerar");
+
+function atualizarPagina() {
+    numero.textContent = cliques;
+    if (cliques === 0) {
+        mensagem.textContent = "Você ainda não clicou no botão.";
+    } else if (cliques === 1) {
+        mensagem.textContent = "Você clicou 1 vez.";
+    } else {
+        mensagem.textContent = `Você clicou ${cliques} vezes.`;
+    }
+}
+
+function aumentarContador() {
+    cliques = cliques + 1;
+    atualizarPagina();
+}
+
+function zerarContador() {
+    cliques = 0;
+    atualizarPagina();
+}
+
+botaoAumentar.addEventListener("click", aumentarContador);
+botaoZerar.addEventListener("click", zerarContador);</code></pre>
+            <p><code>===</code> compara se dois valores são iguais. A estrutura <code>if</code>/<code>else</code> escolhe uma mensagem para zero, uma ou várias vezes. O texto entre crases permite inserir uma variável usando <code>${...}</code>.</p>
+        </section>
+
+        <section>
+            <h2>6. Onde colocar o JavaScript</h2>
+            <p>O exemplo deste arquivo usa uma tag <code>&lt;script&gt;</code> no final do <code>&lt;body&gt;</code>. Assim, o HTML dos botões já existe quando o JavaScript procura por eles.</p>
+            <pre><code>&lt;script&gt;
+    // O código JavaScript fica aqui.
+&lt;/script&gt;
+&lt;/body&gt;</code></pre>
+            <p>Em projetos maiores, é comum salvar o JavaScript em outro arquivo, por exemplo <code>script.js</code>, e carregá-lo com <code>&lt;script src="script.js" defer&gt;&lt;/script&gt;</code> dentro do <code>&lt;head&gt;</code>. O atributo <code>defer</code> faz o navegador esperar o HTML ser lido antes de executar o arquivo.</p>
+        </section>
+
+        <section>
+            <h2>7. JavaScript para alternar o tema</h2>
+            <p>O botão no topo de cada página alterna entre tema claro e escuro. JavaScript adiciona ou remove a classe <code>dark-theme</code> do <code>body</code>; o CSS define as cores para cada tema. As regras CSS de responsividade continuam cuidando do tamanho das telas.</p>
+            <pre><code>botaoTema.addEventListener("click", function () {
+    const temaEscuroAtivo = document.body.classList.toggle("dark-theme");
+    botaoTema.textContent = temaEscuroAtivo
+        ? "Ativar tema claro"
+        : "Ativar tema escuro";
+});</code></pre>
+        </section>
+
+        <section>
+            <h2>Como experimentar</h2>
+            <ol>
+                <li>Abra este arquivo em um editor, como o VS Code.</li>
+                <li>Encontre <code>function aumentarContador()</code> perto do final do arquivo.</li>
+                <li>Experimente mudar <code>cliques + 1</code> para <code>cliques + 2</code>.</li>
+                <li>Salve e atualize a página no navegador. Cada clique agora deve aumentar o contador em 2.</li>
+            </ol>
+            <p><strong>Dica:</strong> se o botão não funcionar, confira se os valores de <code>id</code> no HTML correspondem aos nomes usados em <code>getElementById</code>, e veja se há erros no console do navegador.</p>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Exemplo de JavaScript. Feito para aprender.</p>
+        </footer>
+    </main>
+    <script>
+        const botaoTema = document.getElementById("theme-toggle");
+
+        botaoTema.addEventListener("click", function () {
+            const temaEscuroAtivo = document.body.classList.toggle("dark-theme");
+            botaoTema.textContent = temaEscuroAtivo
+                ? "Ativar tema claro"
+                : "Ativar tema escuro";
+            botaoTema.setAttribute("aria-pressed", temaEscuroAtivo);
+        });
+
+        let cliques = 0;
+
+        const numero = document.getElementById("contador");
+        const mensagem = document.getElementById("mensagem");
+        const botaoAumentar = document.getElementById("aumentar");
+        const botaoZerar = document.getElementById("zerar");
+
+        function atualizarPagina() {
+            numero.textContent = cliques;
+            if (cliques === 0) {
+                mensagem.textContent = "Você ainda não clicou no botão.";
+            } else if (cliques === 1) {
+                mensagem.textContent = "Você clicou 1 vez.";
+            } else {
+                mensagem.textContent = `Você clicou ${cliques} vezes.`;
+            }
+        }
+
+        function aumentarContador() {
+            cliques = cliques + 1;
+            atualizarPagina();
+        }
+
+        function zerarContador() {
+            cliques = 0;
+            atualizarPagina();
+        }
+
+        botaoAumentar.addEventListener("click", aumentarContador);
+        botaoZerar.addEventListener("click", zerarContador);
+    </script>
+</body>
+</html>
